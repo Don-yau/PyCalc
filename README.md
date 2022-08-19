@@ -39,3 +39,50 @@ COMMIT:一个“commit”只指向一个"tree"，它用来标记项目某一个�
 TAG:一个“tag”是来标记某一个提交(commit) 的方法。
 
 几乎所有的Git功能都是使用这四个简单的对象类型来完成的。它就像是在你本机的文件系统之上构建一个小的文件系统。这个小型的文件系统就是 .git/objects目录。 
+
+本地仓库、远端仓库（或者叫远程仓库、服务器仓库）、工作区、缓存区、本地仓库（或者叫 本地版本库）
+
+1, 初始化 git 项目仓库的方法:
+第一种是从一个 git 服务器克隆一个现有的 git 仓库。
+git clone https://gitee.com/xxx/test1.git 
+第二种是在现有项目 或 空项目目录下初始化 git 仓库，并绑定上远端仓库。 
+# 初始化git仓库
+git init
+# 绑定绑定远端仓库
+git remote add origin https://gitee.com/xxx/test1.git 
+
+2. 将工作区文件添加到 git 缓存区 
+将文件添加到 git 缓存区后，项目里的文件将会被 git 监控 
+git add main.cpp 
+可以用 git status 查看缓冲区文件状态
+
+3. 将缓存区文件提交到 版本库
+# -m 参数后面代表的信息备注
+git commit -m "first commit"
+运行后看到终端的一些提示信息，包含文件变动的一些基本信息 
+git log 可以查看提交记录
+ 
+4. 查看文件差异
+在 git 仓库中的文件，都会被 git 跟踪，如文件修改历史、是否是新文件、文件提交历史等等。
+# 比较所有文件与缓存区文件差异
+git diff
+# 比较当前文件和缓存区文件差异
+git diff <file>
+# 比较两次提交之间的差异
+git diff <id1> <id2>
+# 在两个分支之间比较
+git diff <branch1> <branch2>
+# 比较缓存区和版本库差异，与下一条指令的效果一样
+git diff --staged
+# 比较缓存区和版本库差异，与上一条指令的效果一样
+git diff --cached
+# 仅仅比较统计信息
+git diff --stat
+但要注意的是，只有使用 git add 指令将文件文件到缓存区之后，文件的信息才会被记录，
+关键词 a 和 b，分别指的是缓存区和工作区，可以看出在b中的main.cpp文件多了 6 行代码
+
+5. 将本地仓库提交同步到远程仓库
+# 将当前分支 (默认是master/main) 推送到远端仓库的 master/main 分支
+git push -u origin main
+ 
+
