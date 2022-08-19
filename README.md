@@ -21,9 +21,8 @@ git add .
 # 将本地git缓存区代码提交到本地仓库，-m 参数后面是提交备注
 git commit -m "first commit" 
 
-#假如我们在 github 仓库上创建了一个仓库，仓库的 git 地址为 https://github.com/xxx/test.git, 
-# 将本地仓库绑定远程仓库
-git remote add origin https://github.com/xxx/test.git
+#假如在 github 仓库上创建了一个仓库，仓库的 git 地址为 https://github.com/xxx/test.git, 
+# 将本地仓库绑定远程仓库 
 git remote add origin  https://github.com/Don-yau/PyCalc.git
 
 # 将本地的当前master分支代码提交待远端master/main
@@ -45,15 +44,19 @@ Git有四种类型的对象：" blob"、" tree"、 " commit" 和" tag"。
 几乎所有的Git功能都是使用这四个简单的对象类型来完成的。它就像是在你本机的文件系统之上构建一个小的文件系统。这个小型的文件系统就是 .git/objects目录。 
 
 # 本地仓库、远端仓库（或者叫远程仓库、服务器仓库）、工作区、缓存区、本地仓库（或者叫 本地版本库）
+Working Directory (工作区)：我们编辑与变动的代码文件，都在工作区下   pwd；
+Stating Area (缓存区)：代码有变动的时候，git add 提交到 git 缓存区。让 git status   git diff 查看代码的变动；
+Respository (仓库)：在 git 缓存区的代码，都可以提交到 git 仓库进行托管。从图中可以看到，本地的仓库（一般指我们自己的电脑）可以将代码提交到远程的仓库（一般指 git 服务器）。
+
 
 # 1, 初始化 git 项目仓库的方法:
-第一种是从一个 git 服务器克隆一个现有的 git 仓库。
-git clone https://gitee.com/xxx/test1.git 
+第一种是从一个 git 服务器克隆一个现有的 git 仓库。 
+git clone https://github.com/Don-yau/PyCalc.git
 第二种是在现有项目 或 空项目目录下初始化 git 仓库，并绑定上远端仓库。 
 # 初始化git仓库
 git init
 # 绑定绑定远端仓库
-git remote add origin https://gitee.com/xxx/test1.git 
+git remote add origin https://github.com/Don-yau/PyCalc.git
 
 # 2. 将工作区文件添加到 git 缓存区 
 将文件添加到 git 缓存区后，项目里的文件将会被 git 监控 
@@ -90,3 +93,60 @@ git diff --stat
 git push -u origin main
  
 
+#分支的基本操作
+#本地分支
+#（1）查看分支  
+git branch 
+
+# （2）创建与切换分支
+git branch develop  # 创建develop分支
+git checkout develop # 切换到 develop 分支 
+git checkout -b develop #-b参数，创建之后即切换 
+
+#（3）删除分支
+下面我们在develop分支创建一个新分支，并删除掉新创建的分支
+git checkout -b feature/211031
+
+git checkout develop# 先切换回develop分支
+git branch -d feature/211031 # 删除 feature/211031 功能分支
+
+# 远端分支，
+# r1 将本地的`develop`分支提交到远端
+git push -u origin develop  
+	如果远端没有 develop 分支将会自动创建。
+	参数是 -u，是 --set-upstream 的简写，与 push 指令联用。
+	类似功能的参数--set-upstream-to 用于直接设置关联，该参数与 branch 指令联用。 
+git branch --set-upstream-to origin/master develop  # 将远端 master 关联到 本地 develop分支
+	
+	以上指令将远端 master 分支关联到本地的 develop 分支。换一种说法是，我们将本地 develop 分支追踪远端的 master 分支。
+	
+# r2 删除远端的 develop 分支
+git push -u origin -d develop
+origin 关键词指的是一个指针，origin 指向的是本地的代码库托管在远端的仓库，可以说 origin 对应的是远端仓库。  
+
+#  同步远端分支
+（1）相关指令
+git fetch  # 从远程获取最新版本信息到本地
+git merge FETCH_HEAD  # 将远端版本合并到当前分支 
+
+以上的两个指令可以用一个 git pull来代替， 
+git pull <远程主机名> <远程分支名>:<本地分支名>
+
+（2）实例
+git pull  让当前分支自动与其追踪的分支进行合并 
+git pull origin master:develop 远端的 master 分支，与本地的 develop 分支合并，
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
