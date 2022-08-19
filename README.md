@@ -1,27 +1,20 @@
-#use git:
+# usage of git:
 
-# 配置用户名
-git config --global user.name "xxx"
-# 配置邮箱
+# 配置用户 
+git config --global user.name "xxx" 
 git config --global user.email xxx@example.com 
 
-# 进入工作目录
-cd /home/pan/work/src
-# 初始化git仓库
-git init 
+cd /home/pan/work/src# 进入工作目录
 
-# 创建一个c++源代码文件
-touch test.cpp 
+git init # 初始化git仓库
+ 
 
-# 将 test.cpp 文件提交到 git 缓存区
-git add test.cpp 
-# 将当前目录所有文件提交到 git 缓存区
-git add . 
+git add test.cpp  #  提交到 git 缓存区 
+git add .   # 将当前目录所有文件提交到 git 缓存区
 
-# 将本地git缓存区代码提交到本地仓库，-m 参数后面是提交备注
-git commit -m "first commit" 
 
-#假如在 github 仓库上创建了一个仓库，仓库的 git 地址为 https://github.com/xxx/test.git, 
+git commit -m "first commit" # 将本地git缓存区代码提交到本地仓库，-m 参数后面是提交备注
+ 
 # 将本地仓库绑定远程仓库 
 git remote add origin  https://github.com/Don-yau/PyCalc.git
 
@@ -53,10 +46,10 @@ Respository (仓库)：在 git 缓存区的代码，都可以提交到 git 仓�
 第一种是从一个 git 服务器克隆一个现有的 git 仓库。 
 git clone https://github.com/Don-yau/PyCalc.git
 第二种是在现有项目 或 空项目目录下初始化 git 仓库，并绑定上远端仓库。 
-# 初始化git仓库
-git init
-# 绑定绑定远端仓库
-git remote add origin https://github.com/Don-yau/PyCalc.git
+
+git init  # 初始化git仓库
+
+git remote add origin https://github.com/Don-yau/PyCalc.git  # 绑定绑定远端仓库
 
 # 2. 将工作区文件添加到 git 缓存区 
 将文件添加到 git 缓存区后，项目里的文件将会被 git 监控 
@@ -64,37 +57,31 @@ git add main.cpp
 可以用 git status 查看缓冲区文件状态
 
 # 3. 将缓存区文件提交到 版本库
-# -m 参数后面代表的信息备注
-git commit -m "first commit"
+
+git commit -m "first commit"  # -m 参数后面代表的信息备注
 运行后看到终端的一些提示信息，包含文件变动的一些基本信息 
 git log 可以查看提交记录
  
 # 4. 查看文件差异
 在 git 仓库中的文件，都会被 git 跟踪，如文件修改历史、是否是新文件、文件提交历史等等。
-# 比较所有文件与缓存区文件差异
-git diff
-# 比较当前文件和缓存区文件差异
-git diff <file>
-# 比较两次提交之间的差异
-git diff <id1> <id2>
-# 在两个分支之间比较
-git diff <branch1> <branch2>
-# 比较缓存区和版本库差异，与下一条指令的效果一样
-git diff --staged
-# 比较缓存区和版本库差异，与上一条指令的效果一样
-git diff --cached
-# 仅仅比较统计信息
-git diff --stat
+git diff # 比较所有文件与缓存区文件差异
+git diff <file> # 比较当前文件和缓存区文件差异
+git diff <id1> <id2> # 比较两次提交之间的差异
+git diff <branch1> <branch2> # 在两个分支之间比较
+git diff --staged  # 比较缓存区和版本库差异，与下一条指令的效果一样
+git diff --cached  # 比较缓存区和版本库差异，与上一条指令的效果一样
+git diff --stat  # 仅仅比较统计信息
+
 但要注意的是，只有使用 git add 指令将文件文件到缓存区之后，文件的信息才会被记录，
 关键词 a 和 b，分别指的是缓存区和工作区，可以看出在b中的main.cpp文件多了 6 行代码
 
 # 5. 将本地仓库提交同步到远程仓库
-# 将当前分支 (默认是master/main) 推送到远端仓库的 master/main 分支
-git push -u origin main
+git push -u origin main # 将当前分支 (默认是master/main) 推送到远端仓库的 master/main 分支
+
  
 
-#分支的基本操作
-#本地分支
+# 分支的基本操作
+# 本地分支
 #（1）查看分支  
 git branch 
 
@@ -124,6 +111,7 @@ git branch --set-upstream-to origin/master develop  # 将远端 master 关联到
 git push -u origin -d develop
 origin 关键词指的是一个指针，origin 指向的是本地的代码库托管在远端的仓库，可以说 origin 对应的是远端仓库。  
 
+
 #  同步远端分支
 （1）相关指令
 git fetch  # 从远程获取最新版本信息到本地
@@ -137,16 +125,63 @@ git pull  让当前分支自动与其追踪的分支进行合并
 git pull origin master:develop 远端的 master 分支，与本地的 develop 分支合并，
  
 
+ 功能分支要合并到主分支上。上图的合并过程可以通过以下命令来实现
 
 
+# 分支合并
+git checkout develop  #切换到develop分支
+git merge feature     # 将feature分支合并到develop分支 
+git rebase feature    # 将feature分支合并到develop分支
+
+  rebase 的方式不是直接合并，而是将 feature 分支变化的提交记录直接追加到主分支之上。使得两个分支的代码保持提交的记录是一致的  
 
 
+# 文件产生冲突和解决的过程
 
+（1）初始化git仓库
+mkdir test2  # 创建一个 test2 目录
+cd test2  # 进入 test2 目录
+git init  # 初始化git仓库
+git add .  # 将文件添加git缓存区
+git commit -m "first commit" # 将git提交到版本库
+ 
+（2）在新分支写入代码
 
+这时候，我们已经在 master 分支已经有了一个 git 的版本库。现在需要从 master 分支创建新分支，如下命令
+git checkout -b develop 
+git commit -a 等价于下面的指令
+  git add .
+  git commit 
 
+（2）在主分支上写入代码
+接着我们切换到 master 分支，如下指令
+git checkout master
+现在我们在 master 分支中对main.cpp文件添加另外一行代码，如 #include<stdlib.h>
+再使用以下命令进行提交
+git commit -a
 
+（3）产生冲突
+此时，master 分支到了第 2 个版本，develop 也在第 2 个版本，并且他们同一行文件代码不一样，代码合并后必定会产生冲突。
+接下来我们将 develop 分支合并到 master分支，如下命令
+git merge develop  # 在master分支上将develop分支合并进来
+提示信息的关键词 CONFLICT，此时代码已经产生了 git 无法自动解决的冲突，合并之后的代码如下所示
 
+<<<<<<< HEAD
+#include<stdlib.h>
+=======
+#include<iostream>
+>>>>>>> develop
 
+现在我们打开 main.cpp 文件，可以看到合并的代码中被分成了两栏。上面部分的关键词是HEAD，我们在前面说过 HEAD 指针指向的是当前分支，即 master，而下面的部分是 develop 分支的代码。
+
+（4）解决冲突
+ 手动解决冲突，假如我们两行代码都想要，那么删除掉 git 产生的临时行，同时保留两个分支的代码即可，最终修改如下：
+
+#include<stdlib.h>
+#include<iostream>
+最后，我们再将修改之后的代码再次提交到版本库即可，如下指令
+
+git commit -a -m "解决冲突"  
 
 
  
